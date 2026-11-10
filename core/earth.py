@@ -1,14 +1,11 @@
 from pathlib import Path
 
-from manim import *
-from manim.opengl import (
-    OpenGLSphere,
-    OpenGLTexturedSurface,
-)
+from manim import Sphere
+from manim.opengl import OpenGLTexturedSurface
 
 
-class EarthGlobe(VGroup):
-    """Reusable, image-textured 3D Earth."""
+class EarthGlobe(OpenGLTexturedSurface):
+    """Reusable 3D Earth with a NASA image texture."""
 
     def __init__(
         self,
@@ -17,10 +14,9 @@ class EarthGlobe(VGroup):
         resolution=(96, 48),
         **kwargs,
     ):
-        super().__init__(**kwargs)
-
         if texture_path is None:
             project_root = Path(__file__).resolve().parent.parent
+
             texture_path = (
                 project_root
                 / "assets"
@@ -35,19 +31,13 @@ class EarthGlobe(VGroup):
                 f"Earth texture not found: {texture_path}"
             )
 
-        sphere = OpenGLSphere(
+        sphere = Sphere(
             radius=radius,
             resolution=resolution,
         )
 
-        self.surface = OpenGLTexturedSurface(
+        super().__init__(
             sphere,
             str(texture_path),
+            **kwargs,
         )
-
-        self.add(self.surface)
-
-    def rotate_earth(self, angle, axis=UP, **kwargs):
-        """Rotate the Earth around an axis."""
-        self.rotate(angle, axis=axis, **kwargs)
-        return self
