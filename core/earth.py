@@ -1,17 +1,19 @@
 from pathlib import Path
 
-from manim import Sphere
-from manim.opengl import OpenGLTexturedSurface
+import numpy as np
+
+from manim import TAU, PI
+from manim.opengl import OpenGLSurface, OpenGLTexturedSurface
 
 
 class EarthGlobe(OpenGLTexturedSurface):
-    """Reusable 3D Earth with a NASA image texture."""
+    """Reusable 3D Earth with an image texture."""
 
     def __init__(
         self,
         texture_path=None,
         radius=2.0,
-        resolution=(96, 48),
+        resolution=(128, 64),
         **kwargs,
     ):
         if texture_path is None:
@@ -31,8 +33,17 @@ class EarthGlobe(OpenGLTexturedSurface):
                 f"Earth texture not found: {texture_path}"
             )
 
-        sphere = Sphere(
-            radius=radius,
+        def sphere_point(u, v):
+            return np.array([
+                radius * np.sin(v) * np.cos(u),
+                radius * np.sin(v) * np.sin(u),
+                radius * np.cos(v),
+            ])
+
+        sphere = OpenGLSurface(
+            uv_func=sphere_point,
+            u_range=(0, TAU),
+            v_range=(0, PI),
             resolution=resolution,
         )
 
