@@ -1,0 +1,5 @@
+manim
+edge-tts
+mutagen
+numpy
+Pillow
