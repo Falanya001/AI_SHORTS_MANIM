@@ -1,0 +1,15 @@
+# Automatically detect text files
+* text=auto
+
+# Keep images and other binary assets untouched
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.tif binary
+*.tiff binary
+*.mp4 binary
+*.mp3 binary
+*.wav binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
