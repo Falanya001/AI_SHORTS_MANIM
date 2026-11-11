@@ -4,7 +4,7 @@ from manim.opengl import *
 from core.earth import EarthGlobe
 
 
-class EarthRotationTest(ThreeDScene):
+class EarthStillTest(ThreeDScene):
 
     def construct(self):
 
@@ -15,23 +15,7 @@ class EarthRotationTest(ThreeDScene):
             theta=-90 * DEGREES,
         )
 
-        earth = EarthGlobe(
-            radius=2.0,
-            resolution=(128, 64),
-        )
+        earth = EarthGlobe(radius=2.5)
 
         self.add(earth)
-
-        def rotate_earth(mob, dt):
-            mob.rotate(
-                dt * TAU / 10,
-                axis=UP,
-                about_point=ORIGIN,
-            )
-
-        earth.add_updater(rotate_earth)
-
-        self.wait(10)
-
-        earth.clear_updaters()
         self.wait(1)
