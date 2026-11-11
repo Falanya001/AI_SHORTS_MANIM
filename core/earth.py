@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from manim import TAU
-from manim.opengl import Sphere, OpenGLTexturedSurface
+from manim.opengl import OpenGLSphere, OpenGLTexturedSurface
 
 
 class EarthGlobe(OpenGLTexturedSurface):
@@ -30,7 +30,7 @@ class EarthGlobe(OpenGLTexturedSurface):
                 f"Earth texture not found: {texture_path}"
             )
 
-        sphere = Sphere(
+        sphere = OpenGLSphere(
             radius=radius,
             resolution=resolution,
         )
