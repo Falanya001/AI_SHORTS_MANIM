@@ -10,23 +10,28 @@ class EarthRotationTest(ThreeDScene):
 
         self.camera.background_color = BLACK
 
-        earth = EarthGlobe(radius=2.0)
-
         self.set_camera_orientation(
-            phi=70 * DEGREES,
+            phi=75 * DEGREES,
             theta=-90 * DEGREES,
+        )
+
+        earth = EarthGlobe(
+            radius=2.0,
+            resolution=(128, 64),
         )
 
         self.add(earth)
 
-        self.play(
-            Rotate(
-                earth,
-                angle=TAU,
+        def rotate_earth(mob, dt):
+            mob.rotate(
+                dt * TAU / 10,
                 axis=UP,
-                run_time=10,
-                rate_func=linear,
+                about_point=ORIGIN,
             )
-        )
 
-        self.wait(2)
+        earth.add_updater(rotate_earth)
+
+        self.wait(10)
+
+        earth.clear_updaters()
+        self.wait(1)
